@@ -1,0 +1,362 @@
+// carga.js
+document.addEventListener("DOMContentLoaded", () => {
+  // 1. Leer la última URL guardada (o usar la de inicio por defecto)
+  const ultimaUrl = localStorage.getItem("ultimaPagina") || "paginas/inicio.html";
+  cargarContenido(ultimaUrl).then(() => {
+    // 2. Restaurar scroll si lo guardaste antes
+    const y = parseInt(localStorage.getItem("ultimaPosY"), 10);
+    if (!isNaN(y)) {
+      window.scrollTo({ top: y, behavior: "auto" });
+      localStorage.removeItem("ultimaPosY");
+    }
+  });
+});
+
+// Carga dinámica de contenido y guardado de estado
+function cargarContenido(url) {
+  return fetch(url)
+    .then((response) => {
+      if (!response.ok) throw new Error("No se pudo cargar la página");
+      return response.text();
+    })
+    .then((html) => {
+      // Inyecta el HTML en <main>
+      document.querySelector("main").innerHTML = html;
+
+      // Subir al inicio
+      window.scrollTo({ top: 0, behavior: "smooth" });
+
+      // Guardar la URL actual
+      localStorage.setItem("ultimaPagina", url);
+
+      // --- REINICIALIZAR COMPONENTES DINÁMICOS ---
+      if (typeof inicializarFormContacto === "function") {
+        inicializarFormContacto();
+      }
+
+      if (document.getElementById("contenedor-servicios")) {
+        insertarTarjetasServicios();
+      }
+      if (document.getElementById("proyectos-grid")) {
+        insertarProyectosDestacados();
+      }
+      if (document.getElementById("portafolio-grid")) {
+        renderPortafolio(portafolioData);
+        setupPortafolioControls();
+      }
+      if (document.getElementById("contenedor-faq")) {
+        insertarPreguntasFrecuentes();
+      }
+    })
+    .catch((error) => {
+      document.querySelector("main").innerHTML =
+        `<div class="alert alert-danger">Error: ${error.message}</div>`;
+    });
+}
+
+// Antes de recargar o cerrar, guardo scroll
+window.addEventListener("beforeunload", () => {
+  localStorage.setItem("ultimaPosY", window.scrollY);
+});
+
+// ------------------ Servicios ------------------
+function insertarTarjetasServicios() {
+  const servicios = [
+    { 
+      titulo: "Utilidad", 
+      icono: "bi bi-mortarboard-fill", 
+      resumen: "Herramientas prácticas para el aula.", 
+      detalles: "Recursos personalizados, acompañamiento continuo y materiales digitales que facilitan la enseñanza." 
+    },
+    { 
+      titulo: "Desempeño", 
+      icono: "bi bi-bar-chart-line-fill", 
+      resumen: "Mejora del rendimiento en clase.", 
+      detalles: "Monitoreo del progreso, retroalimentación inmediata y estrategias que impulsan el aprendizaje." 
+    },
+    { 
+      titulo: "Concentración", 
+      icono: "bi bi-eye-fill",
+      resumen: "Ambiente sin distracciones.", 
+      detalles: "Métodos que ayudan a mantener la atención, reducir interrupciones y fomentar la disciplina en el aula."
+    },
+  ];
+
+  const contenedor = document.getElementById("contenedor-servicios");
+  contenedor.innerHTML = "";
+
+  contenedor.className = "grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-items-center"; 
+
+  servicios.forEach((s, i) => {
+    const delay = (i + 1) * 100;
+    contenedor.innerHTML += `
+      <div class="relative w-[300px] h-[300px] rounded-xl shadow-lg overflow-hidden group 
+                  border border-gray-700"
+           data-aos="fade-up" data-aos-delay="${delay}">
+        
+        <div class="w-full h-full relative">
+          
+          <!-- Front (más clara) -->
+          <div class="front-content w-full h-full flex flex-col items-center justify-center gap-3 
+                      bg-gradient-to-br from-gray-300 via-gray-200 to-gray-300
+                      transition-all duration-[600ms] ease-[cubic-bezier(0.23,1,0.32,1)] 
+                      group-hover:-translate-y-[30%]">
+            
+            <div class="mb-4 w-20 h-20 flex items-center justify-center rounded-full 
+                        bg-gradient-to-br from-gray-400 via-gray-300 to-gray-400 shadow-md">
+              <i class="${s.icono} text-gray-900 text-3xl"></i>
+            </div>
+            
+            <h3 class="text-lg font-semibold text-gray-900 text-center">${s.titulo}</h3>
+            <p class="text-sm text-gray-700 text-center">${s.resumen}</p>
+          </div>
+
+          <!-- Back (oscura) -->
+          <div class="absolute inset-0 flex flex-col items-center justify-center text-center gap-2 
+                      bg-gradient-to-br from-gray-900 via-gray-700 to-gray-900 text-gray-100 p-5 rounded-md 
+                      translate-y-[96%] transition-all duration-[600ms] ease-[cubic-bezier(0.23,1,0.32,1)] 
+                      group-hover:translate-y-0 pointer-events-none">
+            
+            <h4 class="text-xl font-bold text-white">Detalles</h4>
+            <p class="text-sm leading-relaxed text-gray-300">${s.detalles}</p>
+          </div>
+        </div>
+      </div>
+    `;
+  });
+}
+
+
+// ------------------ Proyectos Destacados ------------------
+
+const proyectosData = [
+  { nombre: 'App de Ventas', descripcion: 'Dashboard comercial con filtros avanzados y gráficos, además de generación de facturas electrónicas DIAN, PDF y QR.' },
+  { nombre: 'Tienda Online', descripcion: 'E‑commerce con pasarela de pagos y carrito dinámico.' },
+];
+
+function insertarProyectosDestacados() {
+  const grid = document.getElementById('proyectos-grid');
+  if (!grid) return;
+  grid.innerHTML = "";
+
+  proyectosData.forEach((app, idx) => {
+    const card = document.createElement('div');
+    card.className = `
+      relative rounded-2xl overflow-hidden p-8 neumorph
+      hover:neumorph-inset transition-transform duration-300 hover:-translate-y-1 hover:scale-[1.02]
+    `;
+    card.setAttribute('data-aos', 'fade-up');
+    card.setAttribute('data-aos-delay', 200 + idx * 100);
+
+    card.innerHTML = `
+      <div class="neumorph-bg absolute right-4 top-4 bg-indigo-600 w-10 h-10 flex items-center justify-center rounded-full text-white shadow-md">
+        <i class="bi bi-star-fill text-xl"></i>
+      </div>
+      <h5 class="text-xl font-semibold text-gray-800 mb-4">${app.nombre}</h5>
+      <p class="text-gray-700 text-sm mb-6">${app.descripcion}</p>
+      <a href="#"
+         class="btn-neumorph inline-flex items-center text-indigo-600 hover:text-indigo-700 transition-colors px-5">
+        Ver más
+        <i class="bi bi-arrow-right-short text-2xl"></i>
+      </a>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+// ------------------ Datos de Portafolio ------------------
+const portafolioData = [
+  {
+    nombre: 'Tienda Online',
+    descripcion: 'E‑commerce con carrito dinámico y pasarela de pagos.',
+    imagen: 'img/JOMB.webp',
+    live: "http://217.196.48.97/",
+    category: 'web',
+    tech: ['Django', 'Bootstrap', 'Tailwind', 'Chart.js']
+  },
+    {
+    nombre: 'Masivos OLÉ! Logistics',
+    descripcion: 'Sistema de gestión logistico con gráficos para manejo de cotizaciones de transporte.',
+    imagen: 'img/JOMB.webp',
+    live: "https://masivosolelogistics.com/",
+    category: 'web',
+    tech: ['Django', 'Bootstrap', 'Chart.js']
+  },
+    {
+    nombre: 'Finanworld',
+    descripcion: 'Sistema de créditos de libranza pensados para pensionados.',
+    imagen: 'img/JOMB.webp',
+    live: "https://jhojanomb.github.io/Finanworld/",
+    category: 'web',
+    tech: ['Django', 'Tailwind']
+  },
+  {
+    nombre: 'Youtube-JOMB',
+    descripcion: 'Aplicativo para descargar videos y audios de YouTube en múltiples formatos, sirve para Windows y Linux.',
+    imagen: 'img/JOMB.webp',
+    download: "https://github.com/JhojanOMB/Youtube-JOMB/releases/latest",
+    category: 'desktop',
+    tech: ['Python', 'Tkinter', 'Pytube']
+  }, 
+];
+
+// Función que renderiza el grid completo
+function renderPortafolio(items) {
+  const grid = document.getElementById('portafolio-grid');
+  const tpl  = document.getElementById('portafolio-card-template');
+  grid.innerHTML = '';
+
+  items.forEach((app, i) => {
+    const clone = tpl.content.cloneNode(true);
+
+    // Imagen y alt
+    const img = clone.querySelector('img');
+    img.src = app.imagen;
+    img.alt = app.nombre;
+
+    // Título / descripción
+    clone.querySelector('[data-role="title"]').textContent = app.nombre;
+    clone.querySelector('[data-role="desc"]').textContent  = app.descripcion;
+
+    // Tech tags
+    const tags = clone.querySelector('[data-role="tags"]');
+    app.tech.forEach(t => {
+      const span = document.createElement('span');
+      span.className = 'text-xs bg-indigo-100 text-indigo-700 px-2 py-1 rounded-full neumorph-bg';
+      span.textContent = t;
+      tags.appendChild(span);
+    });
+
+    // Acción (Live, candado o descarga)
+    const action = clone.querySelector('[data-role="action"]');
+
+    if (app.live) {
+      // Botón Live
+      const a = document.createElement('a');
+      a.href = app.live;
+      a.target = '_blank';
+      a.className = 'w-10 h-10 flex items-center justify-center text-white text-lg bg-indigo-600 hover:bg-indigo-700 rounded-full transition-all';
+      a.innerHTML = '<i class="bi bi-box-arrow-up-right"></i>';
+      action.appendChild(a);
+
+    } else if (app.download) {
+      // Botón Descargar
+      const a = document.createElement('a');
+      a.href = app.download;
+      a.download = ''; // fuerza descarga
+      a.className = 'w-10 h-10 flex items-center justify-center text-white text-lg bg-green-600 hover:bg-green-700 rounded-full transition-all';
+      a.innerHTML = '<i class="bi bi-download"></i>';
+      action.appendChild(a);
+
+    } else {
+      // Bloqueado
+      const span = document.createElement('span');
+      span.className = 'w-10 h-10 flex items-center justify-center text-white text-lg bg-gray-500 rounded-full';
+      span.innerHTML = '<i class="bi bi-lock-fill"></i>';
+      action.appendChild(span);
+    }
+
+    // Delay AOS
+    const card = clone.querySelector('.group');
+    card.setAttribute('data-aos-delay', 100 + i * 100);
+
+    grid.appendChild(clone);
+  });
+}
+
+// ------------------ Búsqueda y Filtros ------------------
+function setupPortafolioControls() {
+  const input   = document.getElementById('portafolio-search');
+  const buttons = document.querySelectorAll('.btn-neumorph');
+  let cat   = 'all';
+  let query = '';
+
+  function apply() {
+    const filtered = portafolioData
+      .filter(p => cat === 'all' || p.category === cat)
+      .filter(p => p.nombre.toLowerCase().includes(query));
+    renderPortafolio(filtered);
+  }
+
+  // Escucha búsqueda
+  input.addEventListener('input', e => {
+    query = e.target.value.trim().toLowerCase();
+    apply();
+  });
+
+  // Escucha filtros de categoría
+  buttons.forEach(btn =>
+    btn.addEventListener('click', () => {
+      // Actualiza clases en botones
+      buttons.forEach(b => {
+        b.classList.replace('bg-indigo-100','bg-transparent');
+        b.classList.replace('text-indigo-700','text-gray-600');
+      });
+      btn.classList.replace('bg-transparent','bg-indigo-100');
+      btn.classList.replace('text-gray-600','text-indigo-700');
+
+      cat = btn.dataset.cat;
+      apply();
+    })
+  );
+
+  // Render inicial
+  apply();
+}
+
+// ------------------ Preguntas Frecuentes ------------------
+function insertarPreguntasFrecuentes() {
+  const faqs = [
+    { pregunta: "¿Cómo puedo solicitar un servicio?", respuesta: "Puedes usar el formulario de contacto o escribirnos directamente a WhatsApp." },
+    { pregunta: "¿Trabajan de forma remota?", respuesta: "Sí, ofrecemos soporte remoto y presencial según el caso." },
+    { pregunta: "¿Aceptan pagos en línea?", respuesta: "Sí, aceptamos transferencias, tarjetas y plataformas digitales." },
+    { pregunta: "¿Qué tiempo tardan en responder?", respuesta: "Generalmente respondemos en menos de 24 horas." }
+  ];
+
+  const contenedor = document.getElementById("contenedor-faq");
+  if (!contenedor) return;
+  contenedor.innerHTML = ""; // limpiar
+
+  faqs.forEach((f, i) => {
+    const delay = (i + 1) * 100;
+    contenedor.innerHTML += `
+      <div class="border border-gray-200 rounded-lg overflow-hidden neumorph" data-aos="fade-up" data-aos-delay="${delay}">
+        <button type="button" class="faq-toggle w-full flex items-center justify-between px-4 py-3 bg-gray-100 hover:bg-gray-200 transition focus:outline-none">
+          <div class="flex items-center space-x-2">
+            <i class="fa-solid fa-question-circle text-indigo-600"></i>
+            <span class="font-medium text-gray-800">${f.pregunta}</span>
+          </div>
+          <i class="fa-solid fa-chevron-down text-gray-600"></i>
+        </button>
+        <div class="faq-answer max-h-0 overflow-hidden px-4 bg-white text-gray-700 border-t border-gray-200 transition-all duration-300">
+          <p class="py-3">${f.respuesta}</p>
+        </div>
+      </div>
+    `;
+  });
+
+  // Añadir listeners
+  contenedor.querySelectorAll('.faq-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const answer = btn.nextElementSibling;
+      const icon = btn.querySelector('i.fa-chevron-down, i.fa-chevron-up');
+
+      // Si ya está abierto, cerrarlo
+      if (answer.style.maxHeight && answer.style.maxHeight !== '0px') {
+        answer.style.maxHeight = '0px';
+        icon.classList.remove('fa-chevron-up');
+        icon.classList.add('fa-chevron-down');
+      } else {
+        // opcional: cerrar otros (si quieres comport. accordion)
+        contenedor.querySelectorAll('.faq-answer').forEach(a => a.style.maxHeight = '0px');
+        contenedor.querySelectorAll('.faq-toggle i.fa-chevron-up').forEach(ic => { ic.classList.remove('fa-chevron-up'); ic.classList.add('fa-chevron-down'); });
+
+        answer.style.maxHeight = answer.scrollHeight + 'px';
+        icon.classList.remove('fa-chevron-down');
+        icon.classList.add('fa-chevron-up');
+      }
+    });
+  });
+
+  if (window.AOS && typeof AOS.refresh === 'function') AOS.refresh();
+}

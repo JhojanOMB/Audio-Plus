@@ -1,0 +1,137 @@
+<body class="bg-gray-50 text-gray-800 relative px-6 py-10 lg:px-24">
+
+<!-- Sección Contacto -->
+<section id="contacto" class="py-16">
+  <div class="max-w-6xl mx-auto px-6 md:px-12">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-10 neumorph rounded-3xl p-8 lg:p-12" data-aos="fade-up">
+
+      <!-- Columna: Formulario -->
+      <div>
+        <h2 class="text-3xl font-semibold text-center md:text-left mb-4">
+          ¿Listo para Potenciar tu Tecnología?
+        </h2>
+        <p class="text-center md:text-left text-gray-600 mb-8">
+          Contáctanos hoy mismo y descubre cómo podemos ayudarte a optimizar tus sistemas y mejorar tu presencia en línea.
+        </p>
+
+        <!-- Formulario -->
+        <form id="contact-form" class="grid grid-cols-1 gap-6" novalidate>
+          <!-- Nombre -->
+          <div class="relative">
+            <div class="input-icon">
+              <i class="fa-solid fa-user text-sm"></i>
+            </div>
+            <input name="nombre" type="text" placeholder="Tu nombre" required
+              class="peer w-full pl-10 pr-4 py-3 rounded-xl neumorph-inset border border-gray-200 text-sm sm:text-base focus:ring-2 focus:ring-violet-300" />
+          </div>
+          <p class="error-message hidden">El nombre es obligatorio</p>
+
+          <!-- Empresa -->
+          <div class="relative">
+            <div class="input-icon">
+              <i class="fa-solid fa-building text-sm"></i>
+            </div>
+            <input name="empresa" type="text" placeholder="Empresa"
+              class="peer w-full pl-10 pr-4 py-3 rounded-xl neumorph-inset border border-gray-200 text-sm sm:text-base focus:ring-2 focus:ring-violet-300" />
+          </div>
+          <p class="error-message hidden"></p>
+
+          <!-- Correo -->
+          <div class="relative">
+            <div class="input-icon">
+              <i class="fa-solid fa-envelope text-sm"></i>
+            </div>
+            <input name="correo" type="email" placeholder="Tu correo electrónico" required
+              class="peer w-full pl-10 pr-4 py-3 rounded-xl neumorph-inset border border-gray-200 text-sm sm:text-base focus:ring-2 focus:ring-violet-300" />
+          </div>
+          <p class="error-message hidden"></p>
+
+          <!-- Teléfono -->
+          <div class="relative">
+            <div class="input-icon">
+              <i class="fa-solid fa-phone text-sm"></i>
+            </div>
+            <input name="telefono" type="tel" placeholder="Tu número telefónico" required pattern="^[0-9]{7,15}$"
+              class="peer w-full pl-10 pr-4 py-3 rounded-xl neumorph-inset border border-gray-200 text-sm sm:text-base focus:ring-2 focus:ring-violet-300" />
+          </div>
+          <p class="error-message hidden"></p>
+
+          <!-- Mensaje -->
+          <div class="relative">
+            <div class="input-icon top-4">
+              <i class="fa-solid fa-message text-sm"></i>
+            </div>
+            <textarea name="mensaje" rows="5" placeholder="Escribe tu mensaje o idea" required
+              class="peer w-full pl-10 pr-4 py-3 rounded-xl resize-none neumorph-inset border border-gray-200 text-sm sm:text-base focus:ring-2 focus:ring-indigo-300"></textarea>
+          </div>
+          <p class="error-message hidden"></p>
+
+          <!-- Botón -->
+          <div class="text-center mt-4">
+            <button type="submit"
+              class="inline-flex items-center btn-neumorph text-gray-800 py-3 px-8 rounded-full transition">
+              <i class="fa-solid fa-paper-plane mr-2"></i> Enviar Mensaje
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Columna: Datos de contacto -->
+      <div class="flex flex-col space-y-6 text-center md:text-left">
+        <h3 class="text-2xl font-semibold">Datos para comunicarse</h3>
+        <p class="text-gray-600">Puedes escribirnos o llamarnos directamente:</p>
+
+        <div class="space-y-4">
+          <p class="flex items-center justify-center md:justify-start gap-3">
+            <i class="fa-solid fa-envelope text-violet-500"></i>
+            <a href="mailto:
+            jombcorreos@gmail.com" class="hover:underline">jombcorreos@gmail.com</a>
+          </p>
+          <p class="flex items-center justify-center md:justify-start gap-3">
+            <i class="fa-solid fa-phone text-violet-500"></i>
+            <a href="tel:+57 302 593 45 18" class="hover:underline">+57 302 593 45 18</a>
+          </p>
+          <p class="flex items-center justify-center md:justify-start gap-3">
+            <i class="fa-solid fa-location-dot text-violet-500"></i>
+            Cll 123 #45-67, Bogotá, Colombia
+          </p>
+        </div>
+
+        <div class="flex items-center justify-center md:justify-start gap-4 mt-4">
+          <a href="https://www.facebook.com/profile.php?viewas=100000686899395&id=61579810604956" class="text-violet-500 hover:text-violet-700"><i class="fa-brands fa-facebook fa-lg"></i></a>
+          <a href="https://www.instagram.com/jomb_tecnologias/" class="text-violet-500 hover:text-violet-700"><i class="fa-brands fa-instagram fa-lg"></i></a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+  <!-- Sección Preguntas Frecuentes -->
+  <section id="faq" class="bg-white mb-24 rounded-2xl shadow-lg py-16 px-6 lg:px-12" data-aos="fade-up">
+    <div class="max-w-4xl mx-auto">
+      <h3 class="text-3xl font-semibold text-center mb-8">Preguntas Frecuentes</h3>
+      <div class="space-y-4" id="contenedor-faq"><!-- Aquí se cargarán las FAQ dinámicamente --></div>
+    </div>
+  </section>
+
+  <!-- Modal oculto -->
+  <div id="modal-msg" class="fixed inset-0 hidden bg-black/50 flex items-center justify-center z-50">
+    <div class="bg-white rounded-2xl p-6 text-center shadow-xl max-w-sm w-full">
+      <p id="modal-text" class="text-lg font-medium mb-4"></p>
+      <button id="closeModal" class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-full">
+        Cerrar
+      </button>
+    </div>
+  </div>
+
+  <script>
+    // Asegurar que las tarjetas se inserten tras cargar el DOM
+    document.addEventListener('DOMContentLoaded', () => {
+      if (document.getElementById('contenedor-servicios')) insertarTarjetasServicios();
+      if (document.getElementById('proyectos-grid')) insertarProyectosDestacados();
+      if (window.AOS) AOS.refresh();
+    });
+  </script>
+</body>
