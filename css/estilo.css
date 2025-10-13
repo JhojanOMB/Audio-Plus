@@ -9,10 +9,10 @@
   --greyLight-1: #e0e0e0;
   --greyLight-2: #c9c9c9;
   --white: #ffffff;
-  --primary-dark-morado: #350060;    /* color accent */
-  --primary-morado: #6b21a8;         /* color primary */
-  --primary-light-morado: #a78bfa;   /* color light */
-  --text: #0f172a;       /* color de texto por defecto */
+  --primary-dark-morado: #350060;
+  --primary-morado: #6b21a8;
+  --primary-light-morado: #a78bfa;
+  --text: #0f172a;
 
   /* Contenedores generales */
   --offset: 6px;
@@ -21,28 +21,25 @@
   /* Botones */
   --btn-offset: 8px;
   --btn-blur: 12px;
-
 }
 
-/* Glassmorphism con un toque neumórfico */
+/* ---------------------------
+   Neumorphism / Glassmorphism
+   --------------------------- */
+
 .neumorph {
-  background: rgba(255, 255, 255, 0.15); /* Fondo translúcido */
+  background: rgba(255, 255, 255, 0.15);
   border-radius: 0.5rem;
-  backdrop-filter: blur(16px); /* Desenfoque */
+  backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(12px);
-
-  /* Borde tenue como vidrio */
   border: 1px solid rgba(255, 255, 255, 0.3);
-
-  /* Sombras estilo neumórfico suaves */
   box-shadow:
-    8px 8px 20px rgba(0, 0, 0, 0.2),
-    -8px -8px 20px rgba(255, 255, 255, 0.1);
-
+    8px 8px 20px rgba(0,0,0,0.2),
+    -8px -8px 20px rgba(255,255,255,0.1);
   transition: all 0.3s ease;
 }
 
-/* Neumorphic inset (para tarjetas, modales, etc.) */
+/* Neumorphic inset (inputs, tarjetas) */
 .neumorph-inset {
   background: var(--neumo-bg) !important;
   border-radius: 12px;
@@ -54,15 +51,15 @@
   transition: all 0.2s ease;
 }
 
-/* Efecto cuando está en focus */
+/* Efecto por defecto de focus en .neumorph-inset (queda en caso lo uses directo) */
 .neumorph-inset:focus {
   box-shadow:
     inset calc(var(--offset) / 2) calc(var(--offset) / 2) calc(var(--blur) / 1.6) var(--neumo-dark),
     inset calc(-1 * var(--offset) / 2) calc(-1 * var(--offset) / 2) calc(var(--blur) / 1.6) var(--neumo-light),
-    0 0 0 2px rgba(79, 70, 229, 0.4); /* un halo en focus */
+    0 0 0 2px rgba(79, 70, 229, 0.14);
 }
 
-/* Neumorphic containers */
+/* Neumorph containers */
 .neumorph-bg {
   background: var(--neumo-bg);
   border-radius: 1rem;
@@ -73,14 +70,13 @@
 }
 
 .neumorph-bg:active {
-  /* Al hacer clic se hunde un poco */
   box-shadow:
     inset calc(var(--offset) / 2) calc(var(--offset) / 2) calc(var(--blur) / 1.6) var(--neumo-dark),
     inset calc(-1 * var(--offset) / 2) calc(-1 * var(--offset) / 2) calc(var(--blur) / 1.6) var(--neumo-light);
   transform: translateY(1px);
 }
 
-/* Botones neumórficos */
+/* Botones neumórficos base */
 .btn-neumorph {
   background: var(--neumo-bg);
   border-radius: 1rem;
@@ -90,23 +86,22 @@
     calc(-1 * var(--btn-offset)) calc(-1 * var(--btn-offset)) var(--btn-blur) 0px var(--neumo-light);
   transition: box-shadow .18s ease, transform .12s ease;
 }
-
 .btn-neumorph:hover {
   box-shadow:
     4px 4px 8px -2px rgba(72, 79, 96, 0.5),
     -3px -3px 8px -1px var(--neumo-light) !important;
 }
-
 .btn-neumorph:active {
   box-shadow:
     inset 4px 4px 10px rgba(12,12,12,0.08),
-    inset -4px -4px 10px var(--neumo-light) !important; 
+    inset -4px -4px 10px var(--neumo-light) !important;
   transform: translateY(1px);
 }
 
-/* Flip Card Effect */
+/* Otras utilidades y componentes (mantengo tus reglas originales mayormente) */
+
+/* Flip Card */
 .flip-card { perspective: 1000px; }
-/* Tarjetas flip de servicios */
 .flip-card-inner {
   position: relative;
   width: 100%;
@@ -114,78 +109,37 @@
   transition: transform 0.7s;
   transform-style: preserve-3d;
 }
-
 .flip-card:hover .flip-card-inner,
-.flip-card:focus-within .flip-card-inner {
-  transform: rotateY(180deg);
-}
-.flip-card-front,
-.flip-card-back {
-  position: absolute;
-  inset: 0;
-  border-radius: 1rem;
-  backface-visibility: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  /* para coherencia con neumorphism: */
+.flip-card:focus-within .flip-card-inner { transform: rotateY(180deg); }
+.flip-card-front, .flip-card-back {
+  position: absolute; inset: 0; border-radius: 1rem; backface-visibility: hidden;
+  display: flex; align-items: center; justify-content: center;
   background: var(--neumo-bg);
   box-shadow:
     var(--offset) var(--offset) var(--blur) var(--neumo-dark),
     calc(-1 * var(--offset)) calc(-1 * var(--offset)) var(--blur) var(--neumo-light);
 }
-
 .flip-card-back {
   transform: rotateY(180deg);
-  /* sombra inset al reverso: */
   box-shadow:
     inset var(--offset) var(--offset) var(--blur) var(--neumo-dark),
     inset calc(-1 * var(--offset)) calc(-1 * var(--offset)) var(--blur) var(--neumo-light);
 }
+.flip-card-front { transform: rotateY(0deg); z-index: 2; }
 
-.flip-card-front {
-  transform: rotateY(0deg);
-  z-index: 2;
-}
-
-/* Tarjetas semiredondas */
+/* Tarjeta semiredonda */
 .tarjeta-semiredonda {
-  width: 30rem;
-  height: 15rem;
-  background-color: transparent;
-  box-shadow: inset 10px 10px 10px 10px rgba(0, 0, 0, 0.158),
-    10px 10px 20px rgba(0, 0, 0, 0.466),
-    inset -10px -10px 10px 10px rgba(255, 255, 255, 0.897);
+  width: 30rem; height: 15rem; background: transparent;
+  box-shadow: inset 10px 10px 10px 10px rgba(0,0,0,0.158),
+              10px 10px 20px rgba(0,0,0,0.466),
+              inset -10px -10px 10px 10px rgba(255,255,255,0.897);
   border-radius: 51% 49% 62% 38% / 25% 57% 43% 75%;
-  position: relative;
-  padding: 4rem 4rem 12rem 6rem;
+  position: relative; padding: 4rem 4rem 12rem 6rem;
 }
+.tarjeta-semiredonda::after { content: ""; display:inline-block; width:10px; height:10px; position:absolute; background: rgba(255,255,255,.842); border-radius:80% 20% 91% 9% / 48% 67% 33% 52%; top:40px; left:40px; }
+.tarjeta-semiredonda::before { content: ""; display:inline-block; width:20px; height:20px; position:absolute; background: rgba(255,255,255,.842); border-radius:48% 52% 45% 55% / 48% 67% 33% 52%; top:35px; left:60px; }
 
-.tarjeta-semiredonda::after {
-  content: "";
-  display: inline-block;
-  width: 10px;
-  height: 10px;
-  position: absolute;
-  background-color: rgba(255, 255, 255, 0.842);
-  border-radius: 80% 20% 91% 9% / 48% 67% 33% 52%;
-  top: 40px;
-  left: 40px;
-}
-
-.tarjeta-semiredonda::before {
-  content: "";
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  position: absolute;
-  background-color: rgba(255, 255, 255, 0.842);
-  border-radius: 48% 52% 45% 55% / 48% 67% 33% 52%;
-  top: 35px;
-  left: 60px;
-}
-
-/* Campo de búsqueda neumórfico */
+/* Search */
 .search-neumorph {
   background: var(--neumo-bg);
   border: none;
@@ -193,284 +147,164 @@
   padding: 0.75rem 1rem;
   width: 100%;
   max-width: 400px;
-
-  /* Sombra externa */
   box-shadow:
     var(--offset) var(--offset) var(--blur) var(--neumo-dark),
     calc(-1 * var(--offset)) calc(-1 * var(--offset)) var(--blur) var(--neumo-light);
-
-  /* Transición suave al enfocar */
   transition: box-shadow 0.2s, background 0.2s;
   font-size: 1rem;
   color: #333;
 }
+.search-neumorph:focus { outline: none; background: #f0f0f0; box-shadow: inset var(--offset) var(--offset) var(--blur) var(--neumo-dark), inset calc(-1 * var(--offset)) calc(-1 * var(--offset)) var(--blur) var(--neumo-light); }
 
-.search-neumorph:focus {
-  outline: none;
-  background: #f0f0f0;
-  /* Sombra interna leve al enfocar */
-  box-shadow:
-    inset var(--offset) var(--offset) var(--blur) var(--neumo-dark),
-    inset calc(-1 * var(--offset)) calc(-1 * var(--offset)) var(--blur) var(--neumo-light);
-}
-
-.fondo {
-  background: var(--neumo-pg);
-}
-
-/* Botón neumórfico púrpura */
+/* Botón morado */
 .btn-neumorph-morado {
-  background: var(--primary-morado);
-  color: #fff;
-  padding: 0.75rem 1.5rem;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-  --shadow-light: rgba(255, 255, 255, 0.5);
-  --shadow-dark: rgba(0, 0, 0, 0.25);
-  box-shadow:
-    8px 8px 16px var(--shadow-dark),
-    -8px -8px 16px var(--shadow-light);
-  transition: all 0.2s ease;
-  cursor: pointer;
+  background: var(--primary-morado); color: #fff; padding: .75rem 1.5rem; font-weight:600;
+  --shadow-light: rgba(255,255,255,0.5); --shadow-dark: rgba(0,0,0,0.25);
+  box-shadow: 8px 8px 16px var(--shadow-dark), -8px -8px 16px var(--shadow-light);
+  transition: all .2s ease; cursor: pointer;
 }
-
-/* Hover → más elevación */
-.btn-neumorph-morado:hover {
-  box-shadow:
-    12px 12px 20px rgba(0, 0, 0, 0.3),
-    -8px -8px 16px rgba(255, 255, 255, 0.6);
-  transform: translateY(-2px);
-}
-
-/* Click → efecto presionado */
-.btn-neumorph-morado:active {
-  transform: translateY(2px);
-  box-shadow:
-    inset 6px 6px 12px var(--shadow-dark),
-    inset -6px -6px 12px var(--shadow-light);
-}
-
+.btn-neumorph-morado:hover { box-shadow: 12px 12px 20px rgba(0,0,0,0.3), -8px -8px 16px rgba(255,255,255,0.6); transform: translateY(-2px); }
+.btn-neumorph-morado:active { transform: translateY(2px); box-shadow: inset 6px 6px 12px var(--shadow-dark), inset -6px -6px 12px var(--shadow-light); }
 
 /* Spinner */
-.btn-spinner {
-  border: 3px solid var(--neumo-dark);
-  border-top: 3px solid var(--neumo-light);
-  border-radius: 50%;
-  width: 18px;
-  height: 18px;
-  animation: spin 0.8s linear infinite;
-  display: inline-block;
-  margin-right: 8px;
+.btn-spinner { border:3px solid var(--neumo-dark); border-top:3px solid var(--neumo-light); border-radius:50%; width:18px; height:18px; animation:spin .8s linear infinite; display:inline-block; margin-right:8px; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Animaciones y utilidades */
+@keyframes flyAway { 0% { transform: translateX(0) translateY(0) rotate(0); opacity:1 } 50% { transform: translateX(60px) translateY(-30px) rotate(20deg); opacity:.8 } 100% { transform: translateX(150px) translateY(-80px) rotate(45deg); opacity:0 } }
+.fade-out { animation: fadeOut .6s forwards; } @keyframes fadeOut { to { opacity:0; transform: translateX(-10px); } }
+
+/* Circulo acuatico (mantener) */
+.circulo-acuatico { position: relative; width: 9rem; height: 9rem; border-radius: 50%; display:grid; place-items:center; margin: 2rem auto; }
+.circulo-acuatico-img { position:relative; z-index:3; width:6rem; height:6rem; display:flex; justify-content:center; align-items:center; border-radius:50%; background:var(--greyLight-1); box-shadow: 0.4rem 0.4rem 0.8rem var(--greyLight-2), -0.4rem -0.4rem 0.8rem var(--white); overflow:hidden; }
+.circulo-acuatico-img img { width:100%; height:100%; object-fit:cover; border-radius:50%; }
+.circulo-acuatico-trasero-1, .circulo-acuatico-trasero-2 { position:absolute; width:6rem; height:6rem; border-radius:50%; top:50%; left:50%; transform: translate(-50%,-50%) scale(0); background: linear-gradient(to bottom right,var(--greyLight-2) 0%, var(--white) 100%); box-shadow: 0.4rem 0.4rem 0.8rem var(--greyLight-2), -0.4rem -0.4rem 0.8rem var(--white); filter: blur(1px); z-index:1; animation: waves 4s linear infinite; }
+.circulo-acuatico-trasero-2 { width:7rem; height:7rem; animation-delay:2s; z-index:0; }
+@keyframes waves { 0% { transform: translate(-50%,-50%) scale(1); opacity: .8 } 80% { opacity:.2 } 100% { transform: translate(-50%,-50%) scale(2.2); opacity:0 } }
+
+/* Back to top (mantener) */
+#back-to-top { opacity:0; pointer-events:none; transition:opacity .3s ease; z-index:9999; } 
+#back-to-top.show { opacity:1; pointer-events:auto; }
+
+/* Bordes de error/éxito y mensajes */
+input.error, textarea.error { border: 2px solid #e3342f; }
+input.success, textarea.success { border: 2px solid #38c172; }
+.error-message { color:#e3342f; font-size:.875rem; margin-top:4px; min-height:1rem; }
+
+.input-wrap,
+.input-wrap input,
+.input-wrap textarea {
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
 }
 
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
+/* wrapper relativo */
+.input-wrap { position: relative; display: block; }
 
-/* Animación éxito */
-.btn-success {
-  background: #4ade80 !important; /* verde */
-  color: white !important;
-  transform: scale(1.05);
-  transition: all 0.3s ease-in-out;
-}
-
-/* Animación de vuelo */
-@keyframes flyAway {
-  0% {
-    transform: translateX(0) translateY(0) rotate(0);
-    opacity: 1;
-  }
-  50% {
-    transform: translateX(60px) translateY(-30px) rotate(20deg);
-    opacity: 0.8;
-  }
-  100% {
-    transform: translateX(150px) translateY(-80px) rotate(45deg);
-    opacity: 0;
-  }
-}
-
-/* Fade out del texto */
-.fade-out {
-  animation: fadeOut 0.6s forwards;
-}
-
-@keyframes fadeOut {
-  to {
-    opacity: 0;
-    transform: translateX(-10px);
-  }
-}
-
-.circulo-acuatico {
-  position: relative;
-  width: 9rem;
-  height: 9rem;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  margin: 2rem auto;
-}
-
-.circulo-acuatico-img {
-  position: relative;
-  z-index: 3;
-  width: 6rem;
-  height: 6rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 50%;
-  background: var(--greyLight-1);
-  box-shadow: 0.4rem 0.4rem 0.8rem var(--greyLight-2),
-              -0.4rem -0.4rem 0.8rem var(--white);
-  overflow: hidden;
-}
-
-.circulo-acuatico-img img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 50%;
-}
-
-/* Ondas traseras */
-.circulo-acuatico-trasero-1,
-.circulo-acuatico-trasero-2 {
+/* icono absolutamente posicionado — siempre centrado verticalmente y sin transformaciones en focus */
+.input-wrap .input-icon,
+.input-wrap .input-icon i {
   position: absolute;
-  width: 6rem;
-  height: 6rem;
-  border-radius: 50%;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(0);
-  background: linear-gradient(to bottom right, var(--greyLight-2) 0%, var(--white) 100%);
-  box-shadow: 0.4rem 0.4rem 0.8rem var(--greyLight-2),
-              -0.4rem -0.4rem 0.8rem var(--white);
-  filter: blur(1px);
-  z-index: 1;
-  animation: waves 4s linear infinite;
-}
-
-.circulo-acuatico-trasero-2 {
-  width: 7rem;
-  height: 7rem;
-  animation-delay: 2s; /* entra a mitad de la otra */
-  z-index: 0;
-}
-
-
-@keyframes waves {
-  0% {
-    transform: translate(-50%, -50%) scale(1);
-    opacity: 0.8;
-  }
-  80% {
-    opacity: 0.2;
-  }
-  100% {
-    transform: translate(-50%, -50%) scale(2.2);
-    opacity: 0;
-  }
-}
-
-/* Botón oculto por defecto */
-#back-to-top {
-  opacity: 0;
-  pointer-events: none; /* no clickeable si está oculto */
-  transition: opacity 0.3s ease;
-  z-index: 9999; /* por si algo lo tapa */
-}
-
-/* Mostrar el botón cuando tiene la clase .show */
-#back-to-top.show {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-/* Bordes de error y éxito */
-input.error, textarea.error {
-  border: 2px solid #e3342f; /* rojo */
-}
-
-input.success, textarea.success {
-  border: 2px solid #38c172; /* verde */
-}
-
-/* Mensajes de error (ya fuera del relative) */
-.error-message {
-  color: #e3342f;
-  font-size: 0.875rem; /* 14px aprox */
-  margin-top: 4px;
-  min-height: 1rem; /* reserva espacio para evitar "saltos" */
-}
-
-/* Contenedor del ícono */
-.input-icon {
-  position: absolute;
-  left: 0.75rem;   /* ~12px */
+  left: 14px; 
   top: 50%;
   transform: translateY(-50%);
-  color: #9ca3af;  /* gris */
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #6b7280;             /* gray-500 */
+  font-size: 1rem;
   pointer-events: none;
-  width: 20px;
-  text-align: center;
+  transition: color .12s linear, opacity .12s linear;
+  opacity: 1;
 }
 
-@keyframes wiggle {
-  0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-4px) rotate(-2deg); }
-  75% { transform: translateX(4px) rotate(2deg); }
+/* Inputs: padding-left amplio para dejar espacio al icono */
+/* (pl-14 en tu HTML equivale a ~56px, así que usamos 56px para que quede alineado) */
+.input-wrap input,
+.input-wrap textarea {
+  padding-left: 56px;   /* espacio para icono + separación */
+  padding-right: 14px;
+  min-height: 44px;
+  line-height: 1.15;
+  background: #fff;
+  color: var(--text);
+  border-radius: 12px;
+  border: 1px solid #d1d5db; /* gray-300 */
+  transition: border-color .12s ease, box-shadow .12s ease, background .12s ease;
+  font-size: 0.95rem;
 }
 
+/* Placeholder más legible y con peso */
+.input-wrap input::placeholder,
+.input-wrap textarea::placeholder {
+  color: #6b7280;   /* gray-500 */
+  opacity: 0.95;
+  font-weight: 500;
+  text-align: left;
+}
 
-@layer utilities {
-  @keyframes rotate {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+.input-wrap input:focus,
+.input-wrap textarea:focus,
+.input-wrap.is-focused-wrap input,
+.input-wrap.is-focused-wrap textarea {
+  border: 3px solid #000; 
+  background-color: #fff;
+  box-shadow:
+    0 0 0 3px #000,           /* borde negro visual de 3px hacia afuera */
+    0 6px 0 0 rgba(0,0,0,1),  /* bloque negro compacto debajo si lo deseas */
+    0 0 0 6px rgba(0,0,0,0.06);/* halo suave externo */
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+}
+
+/* Evitar que el icono cambie color u opacidad al focus */
+.input-wrap:focus-within .input-icon,
+.input-wrap.is-focused-wrap .input-icon {
+  color: #6b7280 !important;
+  opacity: 1 !important;
+}
+
+/* Si hay estado de error (usa .error en el input) */
+.input-wrap input.error,
+.input-wrap textarea.error {
+  border-color: #e3342f;
+  box-shadow: 0 0 0 4px rgba(227,51,47,0.06);
+}
+
+/* Tamaño responsive: en móviles reducimos paddings pero mantenemos espacio icono */
+@media (max-width: 640px) {
+  .input-wrap input, .input-wrap textarea {
+    padding-left: 48px;
+    padding-top: 0.9rem;
+    padding-bottom: 0.9rem;
   }
-  .animate-rotate {
-    animation: rotate 3s linear infinite;
-  }
-
-  @keyframes doted {
-    0% {
-      transform: scale(0.95);
-      box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.3),
-                  0 0 10px 10px rgba(0, 0, 0, 0.3);
-    }
-    60% {
-      transform: scale(0.95);
-      box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.3),
-                  0 0 10px 10px rgba(0, 0, 0, 0.3);
-    }
-    100% {
-      transform: scale(1);
-      box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.7),
-                  0 0 0 0 rgba(0, 0, 0, 0.5),
-                  0 0 0 0 rgba(0, 0, 0, 0.3);
-      opacity: 0;
-    }
-  }
-  .animate-doted {
-    animation: doted 1.5s ease infinite;
-  }
+  .input-wrap .input-icon { left: 12px; width:24px; height:24px; font-size:.95rem; }
+  /* título más ajustado si se requiere */
 }
 
-.brutalist-btn::before{
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(120deg, transparent, rgba(255,255,255,0.25), transparent);
-  transition: left 0.6s;
-  pointer-events: none;
+/* Botón: mantener estilo y focus bonito */
+.btn-neumorph:focus, .btn-neumorph:focus-visible {
+  outline: none;
+  box-shadow: 0 8px 0 #000, 0 0 0 6px rgba(0,0,0,0.06);
+  transform: translateY(-1px);
 }
-.brutalist-btn:hover::before{
-  left: 100%;
+
+/* Asegurar que los iconos de fontawesome no causen altura distinta */
+.input-wrap .input-icon i { line-height: 1; display: inline-block; }
+
+/* Preservar la estética general 'card-brutal' */
+.card-brutal {
+  box-shadow: 10px 10px 0 #000;
+  border: 4px solid #000;
+  background: #fff;
 }
+
+/* Si deseas, aqui puedes añadir reglas puntuales para el foco visible (accesibilidad) */
+:focus-visible { outline-offset: 2px; }
+
+/* Mantener resto de reglas auxiliares (wiggle, utilities, etc.) si las usas */
+@keyframes wiggle { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-4px) rotate(-2deg); } 75% { transform: translateX(4px) rotate(2deg); } }
+

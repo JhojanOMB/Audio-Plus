@@ -1,7 +1,3 @@
-<!-- =========================
-     SECCIÓN CONTACTO (AJUSTADA)
-     Reemplaza tu sección <section id="contacto"> actual por esta
-     ========================= -->
 <section id="contacto" class="py-16">
   <div class="max-w-6xl mx-auto px-6 md:px-12">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-10 neumorph rounded-3xl p-8 lg:p-12 card-brutal" data-aos="fade-up">
@@ -18,50 +14,50 @@
         <!-- Formulario -->
         <form id="contact-form" class="grid grid-cols-1 gap-4" novalidate>
           <!-- Nombre -->
-          <div class="relative">
-            <div class="input-icon absolute left-3 top-3 text-gray-500 pointer-events-none">
+          <div class="relative input-wrap">
+            <span class="input-icon absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none" aria-hidden="true">
               <i class="fa-solid fa-user"></i>
-            </div>
-            <input name="nombre" id="nombre" type="text" placeholder="Tu nombre" required
-              class="peer w-full pl-12 pr-4 py-3 rounded-xl neumorph-inset border border-gray-200 text-sm sm:text-base focus:ring-2 focus:ring-violet-300" />
-            <p class="mt-1 text-xs text-red-600 hidden" id="err-nombre">El nombre es obligatorio</p>
+            </span>
+            <input name="nombre" id="nombre" type="text" placeholder="Tu nombre completo"
+              required
+              class="peer w-full pl-14 pr-4 py-3 rounded-xl neumorph-inset border border-gray-200 text-sm sm:text-base" />
           </div>
 
           <!-- Correo -->
-          <div class="relative">
-            <div class="input-icon absolute left-3 top-3 text-gray-500 pointer-events-none">
+          <div class="relative input-wrap">
+            <span class="input-icon absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none" aria-hidden="true">
               <i class="fa-solid fa-envelope"></i>
-            </div>
-            <input name="correo" id="correo" type="email" placeholder="Tu correo electrónico" required
-              class="peer w-full pl-12 pr-4 py-3 rounded-xl neumorph-inset border border-gray-200 text-sm sm:text-base focus:ring-2 focus:ring-violet-300" />
-            <p class="mt-1 text-xs text-red-600 hidden" id="err-correo">Introduce un correo válido</p>
+            </span>
+            <input name="correo" id="correo" type="email" placeholder="tu@ejemplo.com"
+              required
+              class="peer w-full pl-14 pr-4 py-3 rounded-xl neumorph-inset border border-gray-200 text-sm sm:text-base" />
           </div>
 
           <!-- Teléfono -->
-          <div class="relative">
-            <div class="input-icon absolute left-3 top-3 text-gray-500 pointer-events-none">
+          <div class="relative input-wrap">
+            <span class="input-icon absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none" aria-hidden="true">
               <i class="fa-solid fa-phone"></i>
-            </div>
-            <input name="telefono" id="telefono" type="tel" placeholder="Tu número telefónico (ej: 3012345678)" pattern="^[0-9]{7,15}$"
-              class="peer w-full pl-12 pr-4 py-3 rounded-xl neumorph-inset border border-gray-200 text-sm sm:text-base focus:ring-2 focus:ring-violet-300" />
-            <p class="mt-1 text-xs text-red-600 hidden" id="err-telefono">Teléfono inválido (solo números)</p>
+            </span>
+            <input name="telefono" id="telefono" type="tel" placeholder="3012345678"
+              pattern="^[0-9]{7,15}$"
+              class="peer w-full pl-14 pr-4 py-3 rounded-xl neumorph-inset border border-gray-200 text-sm sm:text-base" />
           </div>
 
           <!-- Mensaje -->
-          <div class="relative">
-            <div class="input-icon absolute left-3 top-4 text-gray-500 pointer-events-none">
+          <div class="relative input-wrap">
+            <span class="input-icon absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none" aria-hidden="true">
               <i class="fa-solid fa-message"></i>
-            </div>
-            <textarea name="mensaje" id="mensaje" rows="5" placeholder="Escribe tu mensaje o idea" required
-              class="peer w-full pl-12 pr-4 py-3 rounded-xl resize-none neumorph-inset border border-gray-200 text-sm sm:text-base focus:ring-2 focus:ring-indigo-300"></textarea>
-            <p class="mt-1 text-xs text-red-600 hidden" id="err-mensaje">Escribe un mensaje</p>
+            </span>
+            <textarea name="mensaje" id="mensaje" rows="5" placeholder="Escribe tu mensaje o idea"
+              required
+              class="peer w-full pl-14 pr-4 py-3 rounded-xl resize-none neumorph-inset border border-gray-200 text-sm sm:text-base"></textarea>
           </div>
 
           <!-- Botón -->
           <div class="text-center mt-4">
             <button type="submit"
-              class="inline-flex items-center btn-neumorph text-gray-800 py-3 px-8 rounded-full transition bg-yellow-300 border-4 border-black shadow-[8px_8px_0_#000] hover:-translate-y-0.5">
-              <i class="fa-solid fa-paper-plane mr-2"></i> Enviar Mensaje
+              class="inline-flex items-center btn-neumorph text-gray-800 py-3 px-8 rounded-full transition bg-yellow-300 border-4 border-black shadow-[8px_8px_0_#000] hover:-translate-y-0.5 focus:outline-none focus-visible:ring-0">
+              <i class="fa-solid fa-paper-plane mr-2" aria-hidden="true"></i> Enviar Mensaje
             </button>
           </div>
         </form>
@@ -74,22 +70,17 @@
 
         <div class="space-y-3">
           <p class="flex items-center md:justify-start justify-center gap-3 text-sm">
-            <i class="fa-solid fa-envelope text-black-200"></i>
+            <i class="fa-solid fa-envelope text-gray-700"></i>
             <a href="mailto:audioplus@gmail.com" class="hover:underline">audioplus@gmail.com</a>
           </p>
           <p class="flex items-center md:justify-start justify-center gap-3 text-sm">
-            <i class="fa-solid fa-phone text-black-200"></i>
+            <i class="fa-solid fa-phone text-gray-700"></i>
             <a href="tel:+573025934518" class="hover:underline">+57 302 593 45 18</a>
           </p>
           <p class="flex items-center md:justify-start justify-center gap-3 text-sm">
-            <i class="fa-solid fa-location-dot text-black-200"></i>
+            <i class="fa-solid fa-location-dot text-gray-700"></i>
             Cll 123 #45-67, Bogotá, Colombia
           </p>
-        </div>
-
-        <div class="flex items-center justify-center md:justify-start gap-4 mt-4">
-          <a href="https://www.facebook.com/profile.php?viewas=100000686899395&id=61579810604956" class="text-black-200 hover:text-yellow-500" aria-label="Facebook"><i class="fa-brands fa-facebook fa-lg"></i></a>
-          <a href="https://www.instagram.com/jomb_tecnologias/" class="text-black-200 hover:text-yellow-500" aria-label="Instagram"><i class="fa-brands fa-instagram fa-lg"></i></a>
         </div>
       </div>
 
@@ -100,93 +91,42 @@
   <div id="modal-msg" class="fixed inset-0 hidden bg-black/50 flex items-center justify-center z-50">
     <div class="bg-white rounded-2xl p-6 text-center shadow-xl max-w-sm w-full card-brutal">
       <p id="modal-text" class="text-lg font-medium mb-4"></p>
-      <button id="closeModal" class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-full">Cerrar</button>
+      <button id="closeModal" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-full">Cerrar</button>
     </div>
   </div>
-
-  <!-- Script: validación simple + envío simulado -->
-  <script>
-    (function(){
-      const form = document.getElementById('contact-form');
-      const modal = document.getElementById('modal-msg');
-      const modalText = document.getElementById('modal-text');
-      const closeModal = document.getElementById('closeModal');
-
-      // Helper para mostrar/ocultar errores
-      function showError(id, msg) {
-        const el = document.getElementById(id);
-        if (!el) return;
-        el.textContent = msg;
-        el.classList.remove('hidden');
-      }
-      function hideError(id) {
-        const el = document.getElementById(id);
-        if (!el) return;
-        el.classList.add('hidden');
-      }
-
-      form.addEventListener('submit', (e) => {
-        e.preventDefault();
-
-        // valores
-        const nombre = document.getElementById('nombre').value.trim();
-        const correo = document.getElementById('correo').value.trim();
-        const telefono = document.getElementById('telefono').value.trim();
-        const mensaje = document.getElementById('mensaje').value.trim();
-
-        // reset errores
-        hideError('err-nombre'); hideError('err-correo'); hideError('err-telefono'); hideError('err-mensaje');
-
-        // validaciones básicas
-        let ok = true;
-        if (!nombre) { showError('err-nombre', 'El nombre es obligatorio'); ok = false; }
-        if (!correo || !/^\S+@\S+\.\S+$/.test(correo)) { showError('err-correo', 'Introduce un correo válido'); ok = false; }
-        if (!mensaje) { showError('err-mensaje', 'Escribe un mensaje'); ok = false; }
-        if (telefono && !/^[0-9]{7,15}$/.test(telefono)) { showError('err-telefono', 'Teléfono inválido (solo números)'); ok = false; }
-
-        if (!ok) return;
-
-        // --- Aquí va tu lógica real de envío (fetch / axios / form backend) ---
-        // Como demo: simulamos envío y mostramos modal de éxito.
-        modalText.textContent = 'Gracias, ' + (nombre || 'amigo') + '! Tu mensaje fue enviado correctamente. Te contactaremos pronto.';
-        modal.classList.remove('hidden');
-        modal.classList.add('flex');
-
-        // limpiar formulario (opcional)
-        form.reset();
-      });
-
-      // Cerrar modal
-      closeModal.addEventListener('click', () => {
-        modal.classList.add('hidden');
-        modal.classList.remove('flex');
-      });
-
-      // cerrar modal con Esc o clic en overlay
-      modal.addEventListener('click', (ev) => {
-        if (ev.target === modal) {
-          modal.classList.add('hidden');
-          modal.classList.remove('flex');
-        }
-      });
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') {
-          if (!modal.classList.contains('hidden')) {
-            modal.classList.add('hidden');
-            modal.classList.remove('flex');
-          }
-        }
-      });
-    })();
-  </script>
-
-  <style>
-    /* pequeños ajustes locales para mantener coherencia visual */
-    .card-brutal { box-shadow: 10px 10px 0 #000; border: 4px solid #000; background: #fff; }
-    .input-icon { width: 1rem; height: 1rem; }
-    .neumorph-inset { background: #f8fafc; box-shadow: inset 6px 6px 12px rgba(0,0,0,0.06), inset -6px -6px 12px rgba(255,255,255,0.6); }
-    .btn-neumorph { background: transparent; }
-    /* accesibilidad simple */
-    button:focus, a:focus, input:focus, textarea:focus { outline: none; box-shadow: 0 0 0 4px rgba(148, 163, 184, 0.12); }
-  </style>
 </section>
+
+<!-- SCRIPT (manténlo al final del body o en tu archivo JS) -->
+<script>
+  (function () {
+    // Añadir / quitar clase is-focused-wrap al wrapper para estilos consistentes
+    const inputs = document.querySelectorAll('.input-wrap input, .input-wrap textarea');
+    inputs.forEach(el => {
+      const wrap = el.closest('.input-wrap');
+      el.addEventListener('focus', () => { wrap?.classList.add('is-focused-wrap'); });
+      el.addEventListener('blur', () => { wrap?.classList.remove('is-focused-wrap'); });
+    });
+
+    // Lógica básica de envío (simulada)
+    const form = document.getElementById('contact-form');
+    const modal = document.getElementById('modal-msg');
+    const modalText = document.getElementById('modal-text');
+    const closeModal = document.getElementById('closeModal');
+
+    form?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      modalText.textContent = 'Gracias — mensaje simulado enviado.';
+      modal.classList.remove('hidden'); modal.classList.add('flex');
+      form.reset();
+    });
+    closeModal?.addEventListener('click', () => { modal.classList.add('hidden'); modal.classList.remove('flex'); });
+
+    // Cerrar con Escape y clic fuera
+    document.addEventListener('keydown', (ev) => {
+      if (ev.key === 'Escape') {
+        if (!modal.classList.contains('hidden')) { modal.classList.add('hidden'); modal.classList.remove('flex'); }
+      }
+    });
+    modal.addEventListener('click', (ev) => { if (ev.target === modal) { modal.classList.add('hidden'); modal.classList.remove('flex'); } });
+  })();
+</script>
