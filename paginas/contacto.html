@@ -1,264 +1,192 @@
-<!-- =====================
-     SECCIÓN DESCARGAS (RESPONSIVE: optimizada para móvil)
-     Pegar dentro del <body>
-     ===================== -->
-<section id="descargas" role="region" aria-labelledby="descargas-title" class="py-12">
-  <div class="max-w-2lg mx-auto px-4 sm:px-8">
-    <div class="neumorph p-6 sm:p-12 text-center" data-aos="fade-up">
-
-      <!-- Título -->
-      <h2
-        id="descargas-title"
-        data-aos="zoom-in"
-        class="inline-block text-2xl sm:text-3xl mb-8 font-extrabold relative
-               border-4 border-black px-5 py-2 sm:px-6 sm:py-3 bg-yellow-300 shadow-[8px_8px_0_#000]
-               transition-all duration-300 ease-in-out hover:-translate-y-1 hover:text-red-500"
-      >
-        DESCARGAS
-      </h2>
-
-      <!-- Contenedor principal -->
-      <main class="flex flex-col gap-8 max-w-4xl mx-auto">
-
-        <!-- Tarjeta destacada: Guía + APK -->
-        <section class="w-full border-[4px] border-black bg-white p-4 sm:p-6 rounded-xl shadow-[10px_10px_0_#000] card-brutal">
-          <div class="grid gap-6">
-
-            <!-- Texto + badges -->
-            <div class="text-left">
-              <h3 class="text-lg sm:text-2xl font-extrabold mb-2">Guía rápida — Configuración y Uso</h3>
-              <p class="text-sm text-gray-700 mb-4">
-                Guía PDF con instalación, puesta a punto y recomendaciones para aulas. También puedes descargar la app Android (.apk)
-                para controlar tu sistema desde el móvil.
-              </p>
-
-              <!-- Badges -->
-              <div class="flex flex-wrap gap-2 items-center mb-4">
-                <span class="px-3 py-1 rounded-full text-xs font-semibold bg-black text-white border-2 border-black">PDF · v1.2</span>
-                <span class="px-3 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-800 border-2 border-black">63.1 MB</span>
-                <span class="px-3 py-1 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-800 border-2 border-black">Guía rápida</span>
-              </div>
-            </div>
-
-            <!-- Botones centrados: mobile = apilados full width, desktop = inline -->
-            <div class="flex flex-col sm:flex-row justify-center sm:justify-center gap-3 sm:gap-4 w-full max-w-[720px] mx-auto">
-              <a href="./media/guia-audio-plus.pdf" download
-                 class="w-full sm:w-48 inline-flex items-center justify-center gap-2 bg-yellow-400 text-black font-bold py-3 rounded-full shadow-lg hover:scale-105 transition transform"
-                 aria-label="Descargar guía PDF">
-                <i class="bi bi-file-earmark-pdf" aria-hidden="true"></i>
-                <span>Descargar PDF</span>
-              </a>
-
-              <!-- Botón abre modal de confirmación (mantener confirmación para APK) -->
-              <button id="apkBtn" type="button"
-                      data-apk="./media/Audio_Plus.apk"
-                      class="w-full sm:w-48 inline-flex items-center justify-center gap-2 bg-green-600 text-white font-bold py-3 rounded-full shadow-lg hover:scale-105 transition transform"
-                      aria-label="Descargar APK (Android)">
-                <i class="bi bi-android2" aria-hidden="true"></i>
-                <span>Descargar APK</span>
-              </button>
-            </div>
-
-            <!-- APK meta + QR: en mobile QR se sitúa debajo y centrado -->
-            <div class="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-3 items-center">
-              <div class="sm:col-span-2 text-sm text-gray-700">
-                <p>
-                  <strong>APK:</strong> <span class="font-medium">Audio_Plus.apk</span> · <strong>v</strong>1.2 · <strong>63.1 MB</strong>
-                </p>
-                <p class="mt-2 text-xs text-gray-600">Al pulsar "Descargar APK" se descargará la apk para que comiences a explorar desde tu móvil. Sigue siempre las instrucciones de seguridad.</p>
-              </div>
-
-              <div class="flex justify-center sm:justify-end items-center mt-2 sm:mt-0">
-                <!-- el src se genera con JS y apunta a la misma URL que el botón APK -->
-                <a id="apkQrLink" href="./media/Audio_Plus.apk" download aria-label="Descargar APK vía QR">
-                  <img id="apkQr" src="" alt="QR descarga APK" class="w-24 h-24 sm:w-28 sm:h-28 border-2 border-black rounded-md" />
-                </a>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- GRID de recursos (tarjetas) -->
-        <section>
-          <h4 class="text-lg sm:text-xl font-extrabold mb-4">Otros recursos</h4>
-
-          <div class="grid gap-4 sm:grid-cols-2">
-            <!-- Manual técnico -->
-            <article class="relative group overflow-hidden rounded-lg border-2 border-black bg-white p-3 flex flex-col card-brutal transition-transform hover:-translate-y-1">
-              <div class="flex items-start gap-3">
-                <div class="flex-1 text-left">
-                  <h5 class="font-extrabold text-sm">Manual técnico</h5>
-                  <p class="text-xs text-gray-700 mt-1">Especificaciones, diagramas y mantenimiento básico.</p>
-                  <div class="mt-2 flex gap-2">
-                    <span class="text-xs px-2 py-1 border-2 border-black rounded-full bg-gray-100">PDF · 5.8 MB</span>
-                    <span class="text-xs px-2 py-1 border-2 border-black rounded-full bg-gray-100">v2.0</span>
-                  </div>
-                </div>
-              </div>
-
-              <div class="mt-3 flex flex-col sm:flex-row gap-2">
-                <a href="./media/manual-tecnico.pdf" download class="flex-1 inline-flex items-center justify-center bg-black text-white font-bold py-2 px-3 rounded-full shadow" aria-label="Descargar manual técnico">
-                  <i class="bi bi-download me-2" aria-hidden="true"></i>
-                  Descargar
-                </a>
-                <button data-file="./media/manual-tecnico.pdf" class="preview-btn inline-flex items-center justify-center bg-white border-2 border-black text-black font-bold py-2 px-3 rounded-full shadow" aria-label="Previsualizar manual">
-                  <i class="bi bi-eye me-2" aria-hidden="true"></i>
-                  Previsualizar
-                </button>
-              </div>
-            </article>
-
-            <!-- Infografía -->
-            <article class="relative group overflow-hidden rounded-lg border-2 border-black bg-white p-3 flex flex-col card-brutal transition-transform hover:-translate-y-1">
-              <div class="flex items-start gap-3">
-                <div class="flex-1 text-left">
-                  <h5 class="font-extrabold text-sm">Infografía de instalación</h5>
-                  <p class="text-xs text-gray-700 mt-1">Instala y calibra en 10 minutos.</p>
-                  <div class="mt-2 flex gap-2">
-                    <span class="text-xs px-2 py-1 border-2 border-black rounded-full bg-gray-100">PNG · 1.1 MB</span>
-                  </div>
-                </div>
-              </div>
-
-              <div class="mt-3 flex flex-col sm:flex-row gap-2">
-                <a href="./media/infografia.png" download class="flex-1 inline-flex items-center justify-center bg-black text-white font-bold py-2 px-3 rounded-full shadow" aria-label="Descargar infografía">
-                  <i class="bi bi-download me-2" aria-hidden="true"></i>
-                  Descargar
-                </a>
-                <button data-file="./media/infografia.png" class="preview-btn inline-flex items-center justify-center bg-white border-2 border-black text-black font-bold py-2 px-3 rounded-full shadow" aria-label="Previsualizar infografía">
-                  <i class="bi bi-eye me-2" aria-hidden="true"></i>
-                  Previsualizar
-                </button>
-              </div>
-            </article>
-          </div>
-        </section>
-
-        <!-- Nota legal compacta -->
-        <section class="text-xs text-gray-600">
-          <p>Al descargar aceptas los términos de uso. Si necesitas soporte, <a href="#" onclick="cargarContenido('paginas/contacto.html'); toggleDrawer()" class="underline font-semibold">contáctanos</a>.</p>
-        </section>
-      </main>
-
-    </div>
-  </div>
-
-  <!-- MODALES (fuera del main para evitar overflow) -->
-  <!-- Previsualizar -->
-  <div id="previewModal" class="fixed inset-0 hidden bg-black/60 z-50 items-center justify-center p-4">
-    <div class="bg-white rounded-xl overflow-hidden w-full max-w-3xl shadow-xl">
-      <div class="p-4 border-b border-gray-200 flex justify-between items-center">
-        <strong>Previsualizar archivo</strong>
-        <button id="closePreview" class="text-sm bg-black text-white px-3 py-1 rounded-full">Cerrar</button>
-      </div>
-      <div id="previewContent" class="p-4">
-        <p class="text-sm text-gray-600">Cargando previsualización…</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- Confirmación APK -->
-  <div id="apkConfirm" class="fixed inset-0 hidden bg-black/60 z-50 items-center justify-center p-4">
-    <div class="bg-white rounded-xl p-6 max-w-md text-left card-brutal">
-      <h3 class="text-lg font-extrabold mb-2">Descargar APK — Audio Plus</h3>
-      <p class="text-sm text-gray-700 mb-4">Vas a descargar el instalador Android (.apk). Sigue estos pasos:</p>
-      <ol class="list-decimal list-inside text-sm mb-4 space-y-2">
-        <li>Descarga y comprueba la integridad (SHA256) si lo deseas.</li>
-        <li>En Android, permite instalación desde fuentes desconocidas (Ajustes → Seguridad) solo durante la instalación.</li>
-        <li>Abre el archivo descargado y acepta la instalación.</li>
-        <li>Confirma solo si confías en el origen.</li>
-      </ol>
-      <div class="flex gap-3 justify-end">
-        <a id="confirmApkLink" href="./media/Audio_Plus.apk" download class="bg-green-600 text-white font-bold py-2 px-4 rounded-full">Descargar APK</a>
-        <button id="cancelApk" class="bg-black text-white font-bold py-2 px-4 rounded-full">Cancelar</button>
-      </div>
-      <p class="mt-3 text-xs text-gray-500">Puedes escanear el QR o copiar el enlace y abrirlo en tu teléfono.</p>
-    </div>
-  </div>
-</section>
-
 <!-- =========================
-     SCRIPTS 
+     SECCIÓN CONTACTO (AJUSTADA)
+     Reemplaza tu sección <section id="contacto"> actual por esta
      ========================= -->
-<script>
-  // helpers 
-  function cargarContenido(path){ console.log('cargarContenido ->', path); }
-  function toggleDrawer(){ console.log('toggleDrawer'); }
+<section id="contacto" class="py-16">
+  <div class="max-w-6xl mx-auto px-6 md:px-12">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-10 neumorph rounded-3xl p-8 lg:p-12 card-brutal" data-aos="fade-up">
 
-  // Generar QR (la misma URL que el APK de descarga)
-  (function generateQr() {
-    const defaultApkPath = './media/Audio_Plus.apk';
-    const apkBtn = document.getElementById('apkBtn');
-    const apkPath = apkBtn?.getAttribute('data-apk') || defaultApkPath;
-    const apkUrl = new URL(apkPath, window.location.href).href;
+      <!-- Columna: Formulario -->
+      <div>
+        <h2 class="text-3xl font-semibold text-center md:text-left mb-4">
+          ¿Listo para potenciar tus clases?
+        </h2>
+        <p class="text-center md:text-left text-gray-600 mb-8">
+          Contáctanos y descubre cómo podemos ayudarte a optimizar tus sistemas y mejorar tu presencia digital.
+        </p>
 
-    const qrImg = document.getElementById('apkQr');
-    const qrLink = document.getElementById('apkQrLink');
-    if (qrImg) qrImg.src = 'https://chart.googleapis.com/chart?cht=qr&chs=240x240&chl=' + encodeURIComponent(apkUrl);
-    if (qrLink) qrLink.href = apkUrl;
-    const confirmLink = document.getElementById('confirmApkLink');
-    if (confirmLink) confirmLink.setAttribute('href', apkUrl);
-  })();
+        <!-- Formulario -->
+        <form id="contact-form" class="grid grid-cols-1 gap-4" novalidate>
+          <!-- Nombre -->
+          <div class="relative">
+            <div class="input-icon absolute left-3 top-3 text-gray-500 pointer-events-none">
+              <i class="fa-solid fa-user"></i>
+            </div>
+            <input name="nombre" id="nombre" type="text" placeholder="Tu nombre" required
+              class="peer w-full pl-12 pr-4 py-3 rounded-xl neumorph-inset border border-gray-200 text-sm sm:text-base focus:ring-2 focus:ring-violet-300" />
+            <p class="mt-1 text-xs text-red-600 hidden" id="err-nombre">El nombre es obligatorio</p>
+          </div>
 
-  // Preview modal logic (misma que tenías)
-  const previewBtns = document.querySelectorAll('.preview-btn');
-  const previewModal = document.getElementById('previewModal');
-  const previewContent = document.getElementById('previewContent');
-  const closePreview = document.getElementById('closePreview');
+          <!-- Correo -->
+          <div class="relative">
+            <div class="input-icon absolute left-3 top-3 text-gray-500 pointer-events-none">
+              <i class="fa-solid fa-envelope"></i>
+            </div>
+            <input name="correo" id="correo" type="email" placeholder="Tu correo electrónico" required
+              class="peer w-full pl-12 pr-4 py-3 rounded-xl neumorph-inset border border-gray-200 text-sm sm:text-base focus:ring-2 focus:ring-violet-300" />
+            <p class="mt-1 text-xs text-red-600 hidden" id="err-correo">Introduce un correo válido</p>
+          </div>
 
-  previewBtns.forEach(b => b.addEventListener('click', () => {
-    const file = b.getAttribute('data-file');
-    previewContent.innerHTML = '';
-    if (!file) return;
-    if (file.match(/\.(png|jpg|jpeg|gif)$/i)) {
-      const img = document.createElement('img');
-      img.src = file; img.alt = 'Previsualización'; img.className = 'w-full h-[60vh] object-contain';
-      previewContent.appendChild(img);
-    } else if (file.endsWith('.pdf')) {
-      const iframe = document.createElement('iframe');
-      iframe.src = file; iframe.className = 'w-full h-[70vh]';
-      previewContent.appendChild(iframe);
-    } else {
-      previewContent.innerHTML = '<p class="text-sm text-gray-600">Previsualización no disponible para este tipo de archivo.</p>';
-    }
-    previewModal.classList.remove('hidden'); previewModal.classList.add('flex');
-  }));
+          <!-- Teléfono -->
+          <div class="relative">
+            <div class="input-icon absolute left-3 top-3 text-gray-500 pointer-events-none">
+              <i class="fa-solid fa-phone"></i>
+            </div>
+            <input name="telefono" id="telefono" type="tel" placeholder="Tu número telefónico (ej: 3012345678)" pattern="^[0-9]{7,15}$"
+              class="peer w-full pl-12 pr-4 py-3 rounded-xl neumorph-inset border border-gray-200 text-sm sm:text-base focus:ring-2 focus:ring-violet-300" />
+            <p class="mt-1 text-xs text-red-600 hidden" id="err-telefono">Teléfono inválido (solo números)</p>
+          </div>
 
-  closePreview?.addEventListener('click', () => {
-    previewModal.classList.add('hidden'); previewModal.classList.remove('flex'); previewContent.innerHTML = '';
-  });
+          <!-- Mensaje -->
+          <div class="relative">
+            <div class="input-icon absolute left-3 top-4 text-gray-500 pointer-events-none">
+              <i class="fa-solid fa-message"></i>
+            </div>
+            <textarea name="mensaje" id="mensaje" rows="5" placeholder="Escribe tu mensaje o idea" required
+              class="peer w-full pl-12 pr-4 py-3 rounded-xl resize-none neumorph-inset border border-gray-200 text-sm sm:text-base focus:ring-2 focus:ring-indigo-300"></textarea>
+            <p class="mt-1 text-xs text-red-600 hidden" id="err-mensaje">Escribe un mensaje</p>
+          </div>
 
-  // APK modal logic (abre confirmación)
-  const apkBtn = document.getElementById('apkBtn');
-  const apkConfirm = document.getElementById('apkConfirm');
-  const cancelApk = document.getElementById('cancelApk');
+          <!-- Botón -->
+          <div class="text-center mt-4">
+            <button type="submit"
+              class="inline-flex items-center btn-neumorph text-gray-800 py-3 px-8 rounded-full transition bg-yellow-300 border-4 border-black shadow-[8px_8px_0_#000] hover:-translate-y-0.5">
+              <i class="fa-solid fa-paper-plane mr-2"></i> Enviar Mensaje
+            </button>
+          </div>
+        </form>
+      </div>
 
-  apkBtn?.addEventListener('click', () => { apkConfirm.classList.remove('hidden'); apkConfirm.classList.add('flex'); });
-  cancelApk?.addEventListener('click', () => { apkConfirm.classList.add('hidden'); apkConfirm.classList.remove('flex'); });
+      <!-- Columna: Datos de contacto -->
+      <div class="flex flex-col space-y-6 text-center md:text-left">
+        <h3 class="text-2xl font-semibold">Datos para comunicarse</h3>
+        <p class="text-gray-600">Puedes escribirnos o llamarnos directamente:</p>
 
-  // Escape para cerrar modales
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-      previewModal?.classList.add('hidden'); previewModal?.classList.remove('flex');
-      apkConfirm?.classList.add('hidden'); apkConfirm?.classList.remove('flex');
-    }
-  });
+        <div class="space-y-3">
+          <p class="flex items-center md:justify-start justify-center gap-3 text-sm">
+            <i class="fa-solid fa-envelope text-black-200"></i>
+            <a href="mailto:audioplus@gmail.com" class="hover:underline">audioplus@gmail.com</a>
+          </p>
+          <p class="flex items-center md:justify-start justify-center gap-3 text-sm">
+            <i class="fa-solid fa-phone text-black-200"></i>
+            <a href="tel:+573025934518" class="hover:underline">+57 302 593 45 18</a>
+          </p>
+          <p class="flex items-center md:justify-start justify-center gap-3 text-sm">
+            <i class="fa-solid fa-location-dot text-black-200"></i>
+            Cll 123 #45-67, Bogotá, Colombia
+          </p>
+        </div>
 
-  // cerrar modal al hacer clic fuera del contenido
-  document.addEventListener('click', (e) => {
-    if (e.target === previewModal) { previewModal.classList.add('hidden'); previewModal.classList.remove('flex'); }
-    if (e.target === apkConfirm) { apkConfirm.classList.add('hidden'); apkConfirm.classList.remove('flex'); }
-  });
-</script>
+        <div class="flex items-center justify-center md:justify-start gap-4 mt-4">
+          <a href="https://www.facebook.com/profile.php?viewas=100000686899395&id=61579810604956" class="text-black-200 hover:text-yellow-500" aria-label="Facebook"><i class="fa-brands fa-facebook fa-lg"></i></a>
+          <a href="https://www.instagram.com/jomb_tecnologias/" class="text-black-200 hover:text-yellow-500" aria-label="Instagram"><i class="fa-brands fa-instagram fa-lg"></i></a>
+        </div>
+      </div>
 
-<style>
-  .card-brutal { box-shadow: 10px 10px 0 #000; border: 4px solid #000; background: #fff; }
-  /* focus visible accesible */
-  button:focus, a:focus { outline: none; box-shadow: 0 0 0 4px rgba(250,204,21,0.18); }
+    </div>
+  </div>
 
-  /* pequeñas mejoras responsivas opcionales */
-  @media (max-width: 640px) {
-    #descargas-title { font-size: 1.35rem; }
-    .neumorph { padding-left: 1rem; padding-right: 1rem; }
-  }
-</style>
+  <!-- Modal de confirmación -->
+  <div id="modal-msg" class="fixed inset-0 hidden bg-black/50 flex items-center justify-center z-50">
+    <div class="bg-white rounded-2xl p-6 text-center shadow-xl max-w-sm w-full card-brutal">
+      <p id="modal-text" class="text-lg font-medium mb-4"></p>
+      <button id="closeModal" class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-full">Cerrar</button>
+    </div>
+  </div>
+
+  <!-- Script: validación simple + envío simulado -->
+  <script>
+    (function(){
+      const form = document.getElementById('contact-form');
+      const modal = document.getElementById('modal-msg');
+      const modalText = document.getElementById('modal-text');
+      const closeModal = document.getElementById('closeModal');
+
+      // Helper para mostrar/ocultar errores
+      function showError(id, msg) {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.textContent = msg;
+        el.classList.remove('hidden');
+      }
+      function hideError(id) {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.classList.add('hidden');
+      }
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        // valores
+        const nombre = document.getElementById('nombre').value.trim();
+        const correo = document.getElementById('correo').value.trim();
+        const telefono = document.getElementById('telefono').value.trim();
+        const mensaje = document.getElementById('mensaje').value.trim();
+
+        // reset errores
+        hideError('err-nombre'); hideError('err-correo'); hideError('err-telefono'); hideError('err-mensaje');
+
+        // validaciones básicas
+        let ok = true;
+        if (!nombre) { showError('err-nombre', 'El nombre es obligatorio'); ok = false; }
+        if (!correo || !/^\S+@\S+\.\S+$/.test(correo)) { showError('err-correo', 'Introduce un correo válido'); ok = false; }
+        if (!mensaje) { showError('err-mensaje', 'Escribe un mensaje'); ok = false; }
+        if (telefono && !/^[0-9]{7,15}$/.test(telefono)) { showError('err-telefono', 'Teléfono inválido (solo números)'); ok = false; }
+
+        if (!ok) return;
+
+        // --- Aquí va tu lógica real de envío (fetch / axios / form backend) ---
+        // Como demo: simulamos envío y mostramos modal de éxito.
+        modalText.textContent = 'Gracias, ' + (nombre || 'amigo') + '! Tu mensaje fue enviado correctamente. Te contactaremos pronto.';
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+
+        // limpiar formulario (opcional)
+        form.reset();
+      });
+
+      // Cerrar modal
+      closeModal.addEventListener('click', () => {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      });
+
+      // cerrar modal con Esc o clic en overlay
+      modal.addEventListener('click', (ev) => {
+        if (ev.target === modal) {
+          modal.classList.add('hidden');
+          modal.classList.remove('flex');
+        }
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          if (!modal.classList.contains('hidden')) {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+          }
+        }
+      });
+    })();
+  </script>
+
+  <style>
+    /* pequeños ajustes locales para mantener coherencia visual */
+    .card-brutal { box-shadow: 10px 10px 0 #000; border: 4px solid #000; background: #fff; }
+    .input-icon { width: 1rem; height: 1rem; }
+    .neumorph-inset { background: #f8fafc; box-shadow: inset 6px 6px 12px rgba(0,0,0,0.06), inset -6px -6px 12px rgba(255,255,255,0.6); }
+    .btn-neumorph { background: transparent; }
+    /* accesibilidad simple */
+    button:focus, a:focus, input:focus, textarea:focus { outline: none; box-shadow: 0 0 0 4px rgba(148, 163, 184, 0.12); }
+  </style>
+</section>
