@@ -9,7 +9,10 @@ document.addEventListener("DOMContentLoaded", () => {
       window.scrollTo({ top: y, behavior: "auto" });
       localStorage.removeItem("ultimaPosY");
     }
+  }).catch((e)=> {
+    // silencioso; ya maneja errores la función cargarContenido
   });
+  
 });
 
 // Carga dinámica de contenido y guardado de estado
@@ -21,7 +24,28 @@ function cargarContenido(url) {
     })
     .then((html) => {
       // Inyecta el HTML en <main>
-      document.querySelector("main").innerHTML = html;
+      const main = document.querySelector("main");
+      if (!main) throw new Error("No se encontró el elemento <main>");
+      main.innerHTML = html;
+
+      // --- MITIGACIÓN: evitar que el HTML inyectado dispare aperturas accidentales ---
+      try {
+        // Si algún elemento recibió autofocus en el HTML inyectado, lo desenfocamos
+        if (document.activeElement && document.activeElement !== document.body) {
+          document.activeElement.blur();
+        }
+
+        // Forzar foco en main (evita que inputs con autofocus creen efectos secundarios)
+        main.tabIndex = -1;
+        main.focus();
+
+        // Si usas AOS / WOW, refrescarlos tras inyectar
+        if (window.AOS && typeof AOS.refresh === 'function') AOS.refresh();
+        // reinit WOW (protegido con try)
+        if (window.WOW) { try { new WOW().init(); } catch(e){} }
+      } catch (e) {
+        console.warn('Error mitigando foco tras carga dinámica:', e);
+      }
 
       // Subir al inicio
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -31,32 +55,36 @@ function cargarContenido(url) {
 
       // --- REINICIALIZAR COMPONENTES DINÁMICOS ---
       if (typeof inicializarFormContacto === "function") {
-        inicializarFormContacto();
+        try { inicializarFormContacto(); } catch(e) { console.warn('inicializarFormContacto() falló', e); }
       }
 
       if (document.getElementById("contenedor-servicios")) {
-        insertarTarjetasServicios();
+        try { insertarTarjetasServicios(); } catch(e) { console.warn('insertarTarjetasServicios() falló', e); }
       }
       if (document.getElementById("proyectos-grid")) {
-        insertarProyectosDestacados();
+        try { insertarProyectosDestacados(); } catch(e) { console.warn('insertarProyectosDestacados() falló', e); }
       }
       if (document.getElementById("portafolio-grid")) {
-        renderPortafolio(portafolioData);
-        setupPortafolioControls();
+        try { renderPortafolio(portafolioData); setupPortafolioControls(); } catch(e) { console.warn('Portafolio render fallo', e); }
       }
       if (document.getElementById("contenedor-faq")) {
-        insertarPreguntasFrecuentes();
+        try { insertarPreguntasFrecuentes(); } catch(e) { console.warn('insertarPreguntasFrecuentes() falló', e); }
       }
     })
     .catch((error) => {
       document.querySelector("main").innerHTML =
         `<div class="alert alert-danger">Error: ${error.message}</div>`;
+      console.error('cargarContenido error:', error);
+      // Rechazamos para que quien llamó pueda saberlo opcionalmente
+      return Promise.reject(error);
     });
 }
 
 // Antes de recargar o cerrar, guardo scroll
 window.addEventListener("beforeunload", () => {
-  localStorage.setItem("ultimaPosY", window.scrollY);
+  try {
+    localStorage.setItem("ultimaPosY", window.scrollY);
+  } catch(e) { /* si storage falla, no hacemos nada */ }
 });
 
 // ------------------ Servicios ------------------
@@ -83,6 +111,7 @@ function insertarTarjetasServicios() {
   ];
 
   const contenedor = document.getElementById("contenedor-servicios");
+  if (!contenedor) return;
   contenedor.innerHTML = "";
 
   contenedor.className = "grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-items-center"; 
@@ -131,7 +160,7 @@ function insertarTarjetasServicios() {
 
 const proyectosData = [
   { nombre: 'App de Ventas', descripcion: 'Dashboard comercial con filtros avanzados y gráficos, además de generación de facturas electrónicas DIAN, PDF y QR.' },
-  { nombre: 'Tienda Online', descripcion: 'E‑commerce con pasarela de pagos y carrito dinámico.' },
+  { nombre: 'Tienda Online', descripcion: 'E-commerce con pasarela de pagos y carrito dinámico.' },
 ];
 
 function insertarProyectosDestacados() {
@@ -168,13 +197,13 @@ function insertarProyectosDestacados() {
 const portafolioData = [
   {
     nombre: 'Tienda Online',
-    descripcion: 'E‑commerce con carrito dinámico y pasarela de pagos.',
+    descripcion: 'E-commerce con carrito dinámico y pasarela de pagos.',
     imagen: 'img/JOMB.webp',
     live: "http://217.196.48.97/",
     category: 'web',
     tech: ['Django', 'Bootstrap', 'Tailwind', 'Chart.js']
   },
-    {
+  {
     nombre: 'Masivos OLÉ! Logistics',
     descripcion: 'Sistema de gestión logistico con gráficos para manejo de cotizaciones de transporte.',
     imagen: 'img/JOMB.webp',
@@ -182,7 +211,7 @@ const portafolioData = [
     category: 'web',
     tech: ['Django', 'Bootstrap', 'Chart.js']
   },
-    {
+  {
     nombre: 'Finanworld',
     descripcion: 'Sistema de créditos de libranza pensados para pensionados.',
     imagen: 'img/JOMB.webp',
@@ -204,6 +233,7 @@ const portafolioData = [
 function renderPortafolio(items) {
   const grid = document.getElementById('portafolio-grid');
   const tpl  = document.getElementById('portafolio-card-template');
+  if (!grid || !tpl) return;
   grid.innerHTML = '';
 
   items.forEach((app, i) => {
@@ -211,54 +241,53 @@ function renderPortafolio(items) {
 
     // Imagen y alt
     const img = clone.querySelector('img');
-    img.src = app.imagen;
-    img.alt = app.nombre;
+    if (img) { img.src = app.imagen; img.alt = app.nombre; }
 
     // Título / descripción
-    clone.querySelector('[data-role="title"]').textContent = app.nombre;
-    clone.querySelector('[data-role="desc"]').textContent  = app.descripcion;
+    const titleEl = clone.querySelector('[data-role="title"]');
+    const descEl = clone.querySelector('[data-role="desc"]');
+    if (titleEl) titleEl.textContent = app.nombre;
+    if (descEl) descEl.textContent  = app.descripcion;
 
     // Tech tags
     const tags = clone.querySelector('[data-role="tags"]');
-    app.tech.forEach(t => {
-      const span = document.createElement('span');
-      span.className = 'text-xs bg-indigo-100 text-indigo-700 px-2 py-1 rounded-full neumorph-bg';
-      span.textContent = t;
-      tags.appendChild(span);
-    });
+    if (tags && app.tech) {
+      app.tech.forEach(t => {
+        const span = document.createElement('span');
+        span.className = 'text-xs bg-indigo-100 text-indigo-700 px-2 py-1 rounded-full neumorph-bg';
+        span.textContent = t;
+        tags.appendChild(span);
+      });
+    }
 
     // Acción (Live, candado o descarga)
     const action = clone.querySelector('[data-role="action"]');
-
-    if (app.live) {
-      // Botón Live
-      const a = document.createElement('a');
-      a.href = app.live;
-      a.target = '_blank';
-      a.className = 'w-10 h-10 flex items-center justify-center text-white text-lg bg-indigo-600 hover:bg-indigo-700 rounded-full transition-all';
-      a.innerHTML = '<i class="bi bi-box-arrow-up-right"></i>';
-      action.appendChild(a);
-
-    } else if (app.download) {
-      // Botón Descargar
-      const a = document.createElement('a');
-      a.href = app.download;
-      a.download = ''; // fuerza descarga
-      a.className = 'w-10 h-10 flex items-center justify-center text-white text-lg bg-green-600 hover:bg-green-700 rounded-full transition-all';
-      a.innerHTML = '<i class="bi bi-download"></i>';
-      action.appendChild(a);
-
-    } else {
-      // Bloqueado
-      const span = document.createElement('span');
-      span.className = 'w-10 h-10 flex items-center justify-center text-white text-lg bg-gray-500 rounded-full';
-      span.innerHTML = '<i class="bi bi-lock-fill"></i>';
-      action.appendChild(span);
+    if (action) {
+      if (app.live) {
+        const a = document.createElement('a');
+        a.href = app.live;
+        a.target = '_blank';
+        a.className = 'w-10 h-10 flex items-center justify-center text-white text-lg bg-indigo-600 hover:bg-indigo-700 rounded-full transition-all';
+        a.innerHTML = '<i class="bi bi-box-arrow-up-right"></i>';
+        action.appendChild(a);
+      } else if (app.download) {
+        const a = document.createElement('a');
+        a.href = app.download;
+        a.download = '';
+        a.className = 'w-10 h-10 flex items-center justify-center text-white text-lg bg-green-600 hover:bg-green-700 rounded-full transition-all';
+        a.innerHTML = '<i class="bi bi-download"></i>';
+        action.appendChild(a);
+      } else {
+        const span = document.createElement('span');
+        span.className = 'w-10 h-10 flex items-center justify-center text-white text-lg bg-gray-500 rounded-full';
+        span.innerHTML = '<i class="bi bi-lock-fill"></i>';
+        action.appendChild(span);
+      }
     }
 
     // Delay AOS
-    const card = clone.querySelector('.group');
-    card.setAttribute('data-aos-delay', 100 + i * 100);
+    const card = clone.querySelector('.group') || clone.firstElementChild;
+    if (card) card.setAttribute('data-aos-delay', 100 + i * 100);
 
     grid.appendChild(clone);
   });
@@ -278,13 +307,13 @@ function setupPortafolioControls() {
     renderPortafolio(filtered);
   }
 
-  // Escucha búsqueda
-  input.addEventListener('input', e => {
-    query = e.target.value.trim().toLowerCase();
-    apply();
-  });
+  if (input) {
+    input.addEventListener('input', e => {
+      query = e.target.value.trim().toLowerCase();
+      apply();
+    });
+  }
 
-  // Escucha filtros de categoría
   buttons.forEach(btn =>
     btn.addEventListener('click', () => {
       // Actualiza clases en botones
@@ -347,7 +376,7 @@ function insertarPreguntasFrecuentes() {
         icon.classList.remove('fa-chevron-up');
         icon.classList.add('fa-chevron-down');
       } else {
-        // opcional: cerrar otros (si quieres comport. accordion)
+        // cerrar otros (comportamiento accordion)
         contenedor.querySelectorAll('.faq-answer').forEach(a => a.style.maxHeight = '0px');
         contenedor.querySelectorAll('.faq-toggle i.fa-chevron-up').forEach(ic => { ic.classList.remove('fa-chevron-up'); ic.classList.add('fa-chevron-down'); });
 
@@ -359,4 +388,132 @@ function insertarPreguntasFrecuentes() {
   });
 
   if (window.AOS && typeof AOS.refresh === 'function') AOS.refresh();
+}
+
+// --------- Inicializador de la sección "Descargas" ---------
+function initDescargas() {
+  // Evitar inicializar varias veces
+  if (document.body.dataset.descargasInit === '1') return;
+  document.body.dataset.descargasInit = '1';
+
+  // --- QR ---
+  try {
+    const defaultApkPath = './media/Audio_Plus.apk';
+    const apkBtn = document.getElementById('apkBtn');
+    const apkPath = apkBtn?.getAttribute('data-apk') || defaultApkPath;
+    const apkUrl = new URL(apkPath, window.location.href).href;
+
+    const qrImg = document.getElementById('apkQr');
+    const qrLink = document.getElementById('apkQrLink');
+    const confirmLink = document.getElementById('confirmApkLink');
+
+    // Dos proveedores: Google Charts primero (muy usado), fallback a qrserver si falla
+    const googleQR = 'https://chart.googleapis.com/chart?cht=qr&chs=240x240&chl=' + encodeURIComponent(apkUrl);
+    const qrServer = 'https://api.qrserver.com/v1/create-qr-code/?size=240x240&data=' + encodeURIComponent(apkUrl);
+
+    if (qrImg) {
+      qrImg.src = googleQR;
+      // fallback si la API de Google está bloqueada
+      qrImg.onerror = () => { qrImg.onerror = null; qrImg.src = qrServer; };
+    }
+    if (qrLink) qrLink.href = apkUrl;
+    if (confirmLink) confirmLink.setAttribute('href', apkUrl);
+  } catch (e) {
+    console.warn('initDescargas: error preparando QR', e);
+  }
+
+  // --- Previsualización de archivos (botones .preview-btn) ---
+  try {
+    const previewBtns = Array.from(document.querySelectorAll('.preview-btn'));
+    const previewModal = document.getElementById('previewModal');
+    const previewContent = document.getElementById('previewContent');
+    const closePreview = document.getElementById('closePreview');
+
+    previewBtns.forEach(b => {
+      // evitar re-binding
+      if (b.dataset.__boundPreview) return;
+      b.dataset.__boundPreview = '1';
+
+      b.addEventListener('click', (ev) => {
+        ev.preventDefault();
+        const file = b.getAttribute('data-file');
+        if (!previewModal || !previewContent) return;
+        previewContent.innerHTML = '';
+
+        if (!file) {
+          previewContent.innerHTML = '<p class="text-sm text-gray-600">Archivo no encontrado.</p>';
+        } else if (file.match(/\.(png|jpg|jpeg|gif)$/i)) {
+          const img = document.createElement('img');
+          img.src = file;
+          img.alt = 'Previsualización';
+          img.className = 'w-full h-[60vh] object-contain';
+          previewContent.appendChild(img);
+        } else if (file.endsWith('.pdf')) {
+          const iframe = document.createElement('iframe');
+          iframe.src = file;
+          iframe.className = 'w-full h-[70vh]';
+          previewContent.appendChild(iframe);
+        } else {
+          previewContent.innerHTML = '<p class="text-sm text-gray-600">Previsualización no disponible para este tipo de archivo.</p>';
+        }
+
+        previewModal.classList.remove('hidden');
+        previewModal.classList.add('flex');
+      });
+    });
+
+    // cerrar preview
+    closePreview?.addEventListener('click', () => {
+      previewModal.classList.add('hidden'); previewModal.classList.remove('flex'); previewContent.innerHTML = '';
+    });
+
+    // cerrar con ESC y clic fuera (solo una vez)
+    if (!document.body.dataset.__previewGlobalHandlers) {
+      document.body.dataset.__previewGlobalHandlers = '1';
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          if (previewModal) { previewModal.classList.add('hidden'); previewModal.classList.remove('flex'); }
+          const apkConfirm = document.getElementById('apkConfirm');
+          if (apkConfirm) { apkConfirm.classList.add('hidden'); apkConfirm.classList.remove('flex'); }
+        }
+      });
+
+      document.addEventListener('click', (e) => {
+        const previewModal = document.getElementById('previewModal');
+        const apkConfirm = document.getElementById('apkConfirm');
+        if (e.target === previewModal) { previewModal.classList.add('hidden'); previewModal.classList.remove('flex'); }
+        if (e.target === apkConfirm) { apkConfirm.classList.add('hidden'); apkConfirm.classList.remove('flex'); }
+      });
+    }
+  } catch (e) {
+    console.warn('initDescargas: error initializing preview handlers', e);
+  }
+
+  // --- Lógica del modal de confirmación APK ---
+  try {
+    const apkBtnEl = document.getElementById('apkBtn');
+    const apkConfirm = document.getElementById('apkConfirm');
+    const cancelApk = document.getElementById('cancelApk');
+
+    if (apkBtnEl && !apkBtnEl.dataset.__boundApk) {
+      apkBtnEl.dataset.__boundApk = '1';
+      apkBtnEl.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (!apkConfirm) return;
+        apkConfirm.classList.remove('hidden'); apkConfirm.classList.add('flex');
+      });
+    }
+
+    if (cancelApk && !cancelApk.dataset.__boundApkCancel) {
+      cancelApk.dataset.__boundApkCancel = '1';
+      cancelApk.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (!apkConfirm) return;
+        apkConfirm.classList.add('hidden'); apkConfirm.classList.remove('flex');
+      });
+    }
+  } catch (e) {
+    console.warn('initDescargas: error initializing APK modal handlers', e);
+  }
 }

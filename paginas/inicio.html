@@ -461,25 +461,28 @@
           </div>
         </div>
 
-        <!-- Botones (en una sola línea y mismo tamaño) -->
-        <div class="flex flex-wrap justify-center gap-4 w-full max-w-[540px]">
+        <div class="flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-6 w-full mt-6 px-4">
+          <!-- Botón Contacto -->
           <button
             id="contactBtn"
             type="button"
             aria-label="Contactarnos"
-            class="flex-1 min-w-[180px] bg-black text-white font-bold py-3 px-8 rounded-full shadow-lg transition transform hover:scale-105 active:scale-95 focus:outline-none focus:ring-4 focus:ring-yellow-300"
+            class="w-full sm:flex-1 sm:max-w-[260px] inline-flex items-center justify-center bg-black text-white font-semibold py-2.5 px-6 rounded-full border-2 border-gray-700 shadow-[4px_4px_0_#000] transition-transform duration-150 hover:-translate-y-0.5 active:translate-y-0.5 focus:outline-none whitespace-nowrap"
             onclick="cargarContenido('paginas/contacto.html'); toggleDrawer()"
           >
+            <i class="fa-solid fa-comments mr-2 text-sm"></i>
             Contáctanos
           </button>
 
+          <!-- Botón Descargar -->
           <button
             id="downloadBtn"
             type="button"
             aria-label="Descargar ahora mismo"
-            class="flex-1 min-w-[180px] bg-yellow-400 text-black font-bold py-3 px-8 rounded-full shadow-lg transition transform hover:scale-105 active:scale-95 focus:outline-none focus:ring-4 focus:ring-black"
+            class="w-full sm:flex-1 sm:max-w-[260px] inline-flex items-center justify-center bg-yellow-400 text-black font-semibold py-2.5 px-6 rounded-full border-2 border-black shadow-[4px_4px_0_#000] transition-transform duration-150 hover:-translate-y-0.5 active:translate-y-0.5 focus:outline-none whitespace-nowrap"
             onclick="cargarContenido('paginas/descargar.html'); toggleDrawer()"
           >
+            <i class="fa-solid fa-download mr-2 text-sm"></i>
             Descargar ahora mismo
           </button>
         </div>
@@ -493,19 +496,6 @@
     </div>
   </div>
 </section>
-
-
-
-<!-- Modal oculto -->
-<div id="modal-msg" class="fixed inset-0 hidden bg-black/50 flex items-center justify-center z-50">
-  <div class="bg-white rounded-2xl p-6 text-center shadow-xl max-w-sm w-full">
-    <p id="modal-text" class="text-lg font-medium mb-4"></p>
-    <button id="closeModal" class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-full">
-      Cerrar
-    </button>
-  </div>
-</div>
-
 
   <!-- Scripts sin estilos inline -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js" defer></script>
