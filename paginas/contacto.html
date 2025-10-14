@@ -71,7 +71,7 @@
         <div class="space-y-3">
           <p class="flex items-center md:justify-start justify-center gap-3 text-sm">
             <i class="fa-solid fa-envelope text-gray-700"></i>
-            <a href="mailto:audioplus@gmail.com" class="hover:underline">audioplus@gmail.com</a>
+            <a href="mailto:audioplus@gmail.com" class="hover:underline">audioplus03@gmail.com</a>
           </p>
           <p class="flex items-center md:justify-start justify-center gap-3 text-sm">
             <i class="fa-solid fa-phone text-gray-700"></i>
@@ -95,38 +95,3 @@
     </div>
   </div>
 </section>
-
-<!-- SCRIPT (manténlo al final del body o en tu archivo JS) -->
-<script>
-  (function () {
-    // Añadir / quitar clase is-focused-wrap al wrapper para estilos consistentes
-    const inputs = document.querySelectorAll('.input-wrap input, .input-wrap textarea');
-    inputs.forEach(el => {
-      const wrap = el.closest('.input-wrap');
-      el.addEventListener('focus', () => { wrap?.classList.add('is-focused-wrap'); });
-      el.addEventListener('blur', () => { wrap?.classList.remove('is-focused-wrap'); });
-    });
-
-    // Lógica básica de envío (simulada)
-    const form = document.getElementById('contact-form');
-    const modal = document.getElementById('modal-msg');
-    const modalText = document.getElementById('modal-text');
-    const closeModal = document.getElementById('closeModal');
-
-    form?.addEventListener('submit', (e) => {
-      e.preventDefault();
-      modalText.textContent = 'Gracias — mensaje simulado enviado.';
-      modal.classList.remove('hidden'); modal.classList.add('flex');
-      form.reset();
-    });
-    closeModal?.addEventListener('click', () => { modal.classList.add('hidden'); modal.classList.remove('flex'); });
-
-    // Cerrar con Escape y clic fuera
-    document.addEventListener('keydown', (ev) => {
-      if (ev.key === 'Escape') {
-        if (!modal.classList.contains('hidden')) { modal.classList.add('hidden'); modal.classList.remove('flex'); }
-      }
-    });
-    modal.addEventListener('click', (ev) => { if (ev.target === modal) { modal.classList.add('hidden'); modal.classList.remove('flex'); } });
-  })();
-</script>
