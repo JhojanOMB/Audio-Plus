@@ -12,7 +12,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }).catch((e)=> {
     // silencioso; ya maneja errores la función cargarContenido
   });
-  
 });
 
 // Carga dinámica de contenido y guardado de estado
@@ -70,6 +69,14 @@ function cargarContenido(url) {
       if (document.getElementById("contenedor-faq")) {
         try { insertarPreguntasFrecuentes(); } catch(e) { console.warn('insertarPreguntasFrecuentes() falló', e); }
       }
+
+      // Inicializar sección de descargas si está presente
+      if (document.getElementById('descargas')) {
+        try { initDescargas(); } catch(e) { console.warn('initDescargas fallo', e); }
+      }
+
+      // refrescar AOS de nuevo por si se añadieron elementos con data-aos
+      if (window.AOS && typeof AOS.refresh === 'function') AOS.refresh();
     })
     .catch((error) => {
       document.querySelector("main").innerHTML =
@@ -392,10 +399,6 @@ function insertarPreguntasFrecuentes() {
 
 // --------- Inicializador de la sección "Descargas" ---------
 function initDescargas() {
-  // Evitar inicializar varias veces
-  if (document.body.dataset.descargasInit === '1') return;
-  document.body.dataset.descargasInit = '1';
-
   // --- QR ---
   try {
     const defaultApkPath = './media/Audio_Plus.apk';
